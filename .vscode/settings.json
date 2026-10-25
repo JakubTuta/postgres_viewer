@@ -1,0 +1,10 @@
+{
+  // Project-specific only; Python formatting lives in user settings
+  "[python]": {
+    "editor.rulers": [100]
+  },
+  "python.defaultInterpreterPath": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
+  "python.analysis.extraPaths": ["backend"],
+  // Pylance only reads pyproject.toml at the workspace root; mirror backend/pyproject.toml
+  "python.analysis.typeCheckingMode": "strict"
+}
