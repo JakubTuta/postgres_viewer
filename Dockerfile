@@ -22,7 +22,7 @@ COPY backend/ ./
 COPY --from=frontend_build /app/build/client ./build/client
 
 ENV UV_NO_DEV=1
-ENV INSIDE_DOCKER=1
+ENV INSIDE_CONTAINER=1
 ENV PYTHONUNBUFFERED=1
 
 RUN uv sync --locked

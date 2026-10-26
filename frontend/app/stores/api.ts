@@ -1,7 +1,16 @@
+import axios, { type AxiosRequestConfig, type AxiosResponse } from "axios";
 import { create } from "zustand";
-import axios, { type AxiosRequestConfig } from "axios";
 
-export const useApiStore = create(() => ({
+interface ApiState {
+  call: (
+    url: string,
+    method?: "GET" | "POST" | "DELETE" | "PATCH" | "PUT",
+    data?: object | null,
+    headers?: object | null,
+  ) => Promise<AxiosResponse>;
+}
+
+export const useApiStore = create<ApiState>(() => ({
   call: async (
     url: string,
     method: "GET" | "POST" | "DELETE" | "PATCH" | "PUT" = "GET",
@@ -17,7 +26,6 @@ export const useApiStore = create(() => ({
     if (data) config.data = data;
     if (headers) config.headers = headers;
 
-    const response = await axios.request(config);
-    console.log(response);
+    return await axios.request(config);
   },
 }));

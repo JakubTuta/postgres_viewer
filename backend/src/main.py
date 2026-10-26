@@ -25,21 +25,21 @@ app = fastapi.FastAPI(
     lifespan=lifespan,
 )
 
-app.add_middleware(
-    fastapi.middleware.cors.CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 app.include_router(routes.tables_router)
+
+
+if config.settings.inside_container:
+    frontend_dir = Path(__file__).resolve().parent.parent / "build" / "client"
+    app.frontend("/", directory=frontend_dir)
+else:
+    app.add_middleware(
+        fastapi.middleware.cors.CORSMiddleware,
+        allow_origins=["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 
 @app.get("/api/health")
 async def health():
     return {"status": "healthy"}
-
-
-if config.settings.is_docker:
-    frontend_dir = Path(__file__).resolve().parent.parent / "build" / "client"
-    app.frontend("/", directory=frontend_dir)
