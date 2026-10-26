@@ -1,12 +1,12 @@
 import { Welcome } from "../welcome/welcome";
-
-export function meta() {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+import { useApiStore } from "~/stores/api";
 
 export default function Home() {
-  return <Welcome />;
+  const { call } = useApiStore();
+  return (
+    <div>
+      <button onClick={() => call("/api/tables")}>CALL</button>
+    </div>
+  );
+  // return <Welcome />;
 }
